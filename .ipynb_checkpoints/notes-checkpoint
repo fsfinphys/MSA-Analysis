@@ -1,0 +1,13 @@
+Section E of https://www.federalregister.gov/documents/2021/07/16/2021-15159/2020-standards-for-delineating-core-based-statistical-areas denotes what Metropolitan Statistical Area's are. 
+
+Criteria for MSA: Have at least one ubranized area of 50k+ pop. I will take urbanized area to mean city. MSA's will be named with up to a max of 3 CORE CITIES (more than 50k) in the name followed by state. Ex: Atlanta-Sandy Springs-Marietta GA MSA
+
+The data has the following columns: [ 'city', 'state', 'country', 'latitude', 'longitude', 'population', 'msa']
+
+the 'msa' column will be used for comparison of results.
+
+The clustering algorthim will use is a DBSCAN, this is because they are very good at drawing "awkward" boundaries similar to humans. Also, these will excluse 'outliers' which something like a K-means will not.
+
+Given the lat, long data, I will use the haversine distance when checking cities are "near" each other. 
+
+As of 2019, avg commute time one-way is 27min https://www.census.gov/newsroom/press-releases/2021/one-way-travel-time-to-work-rises.html
