@@ -9,7 +9,7 @@ from folium.plugins import MarkerCluster
 
 def load_data(file_path):
     df = pd.read_csv(file_path)
-    df = df.drop(df.columns[0], axis=1)
+    #df = df.drop(df.columns[0], axis=1)
     return df
 
 def filter_cities_by_country(df, country='united states'):
@@ -45,7 +45,9 @@ def label_msas(df_filtered):
     df_sorted = df_sorted[df_sorted['population'] > 50000]
     
     msa_names_city = df_sorted.groupby('cluster')['city'].apply(lambda x: '-'.join(x)).reset_index(name='city_names')
-    msa_names_state = df_sorted.groupby('cluster')['state'].apply(lambda x: '-'.join(x.unique())).reset_index(name='state_names')
+    #some entries do not have "states"
+    msa_names_state = df_sorted.groupby('cluster')['state'].apply(lambda x: '-'.join(str(i) for i in x.unique() if pd.notna(i))).reset_index(name='state_names')
+    #msa_names_state = df_sorted.groupby('cluster')['state'].apply(lambda x: '-'.join(x.unique())).reset_index(name='state_names')
     
     df_with_pred_msa = pd.merge(df_filtered, msa_names_city, on='cluster', how='left')
     df_with_pred_msa = pd.merge(df_with_pred_msa, msa_names_state, on='cluster', how='left')
